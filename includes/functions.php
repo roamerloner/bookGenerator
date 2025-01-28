@@ -1,20 +1,16 @@
 <?php
 require_once 'config.php';
-function generateBookData($seed, $page, $language, $likes, $reviews, $batchSize) {
+function generateBookData($seed, $offset, $language, $likes, $reviews, $batchSize) {
     $faker = Faker\Factory::create($language);
-    $faker->seed($seed + $page);
+    $faker->seed($seed + $offset);
 
     $books = [];
-    $startIndex = ($page === 1) ? 1 : 21 + (($page - 2) * 10);
     
     for ($i = 0; $i < $batchSize; $i++) {
-        $bookIndex = $startIndex + $i ;
-        
         $reviewCount = round(generatePoissonRandom($reviews));
         $likesCount = round(generatePoissonRandom($likes));
         
         $books[] = [
-            'index' => $bookIndex,
             'isbn' => generateISBN($faker),
             'title' => generateBookTitle($faker, $language),
             'authors' => generateAuthors($faker),
@@ -27,7 +23,6 @@ function generateBookData($seed, $page, $language, $likes, $reviews, $batchSize)
     
     return $books;
 }
-
 
 
 function generateISBN($faker) {
@@ -128,7 +123,7 @@ function generateBookTitle($faker, $language) {
             }
         }
 
-    
+        
         return $faker->randomElement($currentList);
     }, $pattern);
 
