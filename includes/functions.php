@@ -35,7 +35,7 @@ function generateISBN($faker) {
 }
 
 function generateBookTitle($faker, $language) {
-    // Define patterns and word lists for each language
+    
     $patterns = [
         'en_US' => [
             "The #Adjective# #Noun#",
@@ -75,7 +75,7 @@ function generateBookTitle($faker, $language) {
         ]
     ];
 
-    // Define word lists for each language
+    
     $wordLists = [
         'en_US' => [
             'Adjective' => ['great', 'small', 'old', 'new', 'dark', 'bright', 'strong', 'weak', 'quick', 'slow'],
@@ -106,33 +106,33 @@ function generateBookTitle($faker, $language) {
         ]
     ];
 
-    // Select patterns and word list based on language
+    
     $patterns = $patterns[$language] ?? $patterns['en_US'];
     $wordList = $wordLists[$language] ?? $wordLists['en_US'];
 
-    // Select a random pattern
+    
     $pattern = $faker->randomElement($patterns);
 
-    // Replace placeholders with words from the word list
+    
     $title = preg_replace_callback('/#(\w+(?:\.\w+)*)#/', function($matches) use ($wordList, $faker) {
-        $key = $matches[1]; // e.g., "Noun.Plural"
-        $keys = explode('.', $key); // Split into ["Noun", "Plural"]
+        $key = $matches[1]; 
+        $keys = explode('.', $key); 
         $currentList = $wordList;
 
-        // Traverse the nested word list
+        
         foreach ($keys as $k) {
             if (isset($currentList[$k])) {
                 $currentList = $currentList[$k];
             } else {
-                return ''; // If the key doesn't exist, return an empty string
+                return ''; 
             }
         }
 
-        // Return a random element from the final list
+    
         return $faker->randomElement($currentList);
     }, $pattern);
 
-    // Ensure proper capitalization
+    
     return ucfirst($title);
 }
 

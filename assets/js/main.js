@@ -7,13 +7,13 @@ let currentSettings = {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Initialize controls
+  
   document.getElementById("seed").value = currentSettings.seed
   document.getElementById("language").value = currentSettings.language
   document.getElementById("likes").value = currentSettings.likes
   document.getElementById("reviews").value = currentSettings.reviews
 
-  // Add event listeners
+  
   document.getElementById("language").addEventListener("change", updateBooks)
   document.getElementById("seed").addEventListener("change", updateBooks)
   document.getElementById("likes").addEventListener("input", updateLikesValue)
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("reviews").addEventListener("change", updateBooks)
   document.getElementById("randomSeed").addEventListener("click", randomizeSeed)
 
-  // Load initial data
+  
   loadBooks(true)
 })
 
@@ -50,7 +50,7 @@ function updateBooks() {
 function loadBooks(reset = false) {
   if (reset) {
       document.getElementById('booksTableBody').innerHTML = '';
-      currentSettings.page = 1; // Reset the page counter
+      currentSettings.page = 1; 
   }
 
   document.getElementById('loading').classList.remove('d-none');
@@ -61,7 +61,7 @@ function loadBooks(reset = false) {
       likes: currentSettings.likes,
       reviews: currentSettings.reviews,
       page: currentSettings.page,
-      batchSize: reset ? 20 : 10 // Load 20 records initially, then 10 on each scroll
+      batchSize: reset ? 20 : 10 
   });
 
   fetch(`ajax/get-books.php?${params}`)
